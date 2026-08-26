@@ -1,7 +1,8 @@
 # Taylorcraft
 
 Daily aggregator of Taylorcraft classified listings (BC-12D, BC-65,
-DCO-65, DC-65, L-2, F-19, F-21, F-22, and their letter-suffixed variants)
+BF-65, BL-65, DCO-65, DC-65, L-2, F-19, F-21, F-22, and their
+letter-suffixed variants)
 from [Barnstormers.com](https://www.barnstormers.com), published as a
 static page (`docs/index.html`) meant to be embedded via `<iframe>` on
 taildraggers.com.
@@ -30,8 +31,8 @@ with the same fix from day one: `scraper/barnstormers.py` filters by
 title against a small allowlist (see `TARGET_MODEL_PHRASES` in
 `scraper/barnstormers.py`) before publishing.
 
-Taylorcraft model codes (`BC-12D`, `BC-65`, `DCO-65`, `DC-65`, `L-2`,
-`F-19`, `F-21`, `F-21A`, `F-21B`, `F-22`, `F-22A`) are short and
+Taylorcraft model codes (`BC-12D`, `BC-65`, `BF-65`, `BL-65`, `DCO-65`,
+`DC-65`, `L-2`, `F-19`, `F-21`, `F-21A`, `F-21B`, `F-22`, `F-22A`) are short and
 generic-looking enough that, unlike RANS's S-numbers or Luscombe's
 8-series codes, they are **not** trusted standalone - every model match
 requires the title to also say "Taylorcraft" explicitly (the same lesson

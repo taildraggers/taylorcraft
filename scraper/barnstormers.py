@@ -8,7 +8,7 @@ HTML markup from the genuine ones. So results are filtered by title
 against a small allowlist of Taylorcraft-specific terms before being
 published.
 
-Taylorcraft model codes (BC-12D, BC-65, DCO-65, DC-65, L-2, F-19, F-21,
+Taylorcraft model codes (BC-12D, BC-65, BF-65, BL-65, DCO-65, DC-65, L-2, F-19, F-21,
 F-21A, F-21B, F-22, F-22A) are short and generic-looking enough that,
 unlike RANS's S-numbers or Luscombe's 8-series codes, they are NOT
 trusted standalone - every model match here requires the title to also
@@ -87,7 +87,11 @@ def _matches_target_models(title: str) -> bool:
 _BRAND_RE = re.compile(r"\btaylorcraft\b", re.IGNORECASE)
 
 _BC_RE = re.compile(r"\bbc[\s-]?12[\s-]?(d)?\b", re.IGNORECASE)
-_BC65_RE = re.compile(r"\bbc[\s-]?65\b", re.IGNORECASE)
+# The pre-war "B" series shared a common 65hp airframe across three engine
+# suppliers, distinguished only by the middle letter: BC-65 (Continental),
+# BF-65 (Franklin), BL-65 (Lycoming). Seen live in the wild for BF-65/BL-65
+# (both fell through to the bare-Taylorcraft fallback before this was added).
+_B_SERIES_65_RE = re.compile(r"\bb([cfl])[\s-]?65\b", re.IGNORECASE)
 _DCO_RE = re.compile(r"\bdco[\s-]?65\b", re.IGNORECASE)
 _DC_RE = re.compile(r"\bdc[\s-]?65\b", re.IGNORECASE)
 _L2_RE = re.compile(r"\bl[\s-]?2\b", re.IGNORECASE)
@@ -104,8 +108,9 @@ def _extract_model(title: str) -> tuple[str, str] | None:
         suffix = match.group(1)
         return MAKE, f"BC-12{suffix.upper()}" if suffix else "BC-12"
 
-    if _BC65_RE.search(title):
-        return MAKE, "BC-65"
+    match = _B_SERIES_65_RE.search(title)
+    if match:
+        return MAKE, f"B{match.group(1).upper()}-65"
     if _DCO_RE.search(title):
         return MAKE, "DCO-65"
     if _DC_RE.search(title):
